@@ -27,11 +27,17 @@ import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/V
 
 /**
  * @title A sample Raffle contract
- * @author GideonOV
+ * @author GideonOv
  * @notice This contract is a simple implementation of a raffle system.
  * @dev Implements Chainlink VRFv2.5 for random number generation.
  * @dev Implements Chainlink automation for automatic winner selection.
+ * @dev Uses a subscription model for funding VRF requests.
+ * @dev Subsription ID is set to 70727098758823347346317768322724523984682348539548870321631433152369211671597.
+ * @dev Subscription ID can be changed in the HelperConfig.s.sol script.
+ * @dev A Chainlink Upkeep should be manually registered on the Raffle contract using custom based logic.
  * @dev This contract is for educational purposes and should not be used in production.
+ * @dev I would expect that anyone using this contract should have profound knowledge in smart contract develpoment..
+ * @dev ..specifically in solidity and foundry
  */
 contract Raffle is VRFConsumerBaseV2Plus {
     /* Errors */
@@ -68,6 +74,8 @@ contract Raffle is VRFConsumerBaseV2Plus {
     event RaffleWinnerPicked(address indexed winner);
     event RequestedRaffleWinner(uint256 indexed requestId);
 
+    // The VRFConsumerBaseV2Plus contract inherited by this contract takes a..
+    // ..vrfcoordinator into its constructor
     constructor(
         uint256 entranceFee,
         uint256 interval,
@@ -100,6 +108,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     }
 
     /**
+     * * @dev This function should only be called by a Chainlink Upkeep
      * @dev This is the function that the Chainlink nodes will call to see if the lottery is ready to have a winner picked.
      * @dev The following should be true:
      * 1. The time interval of a raffle duration has passed
@@ -124,6 +133,9 @@ contract Raffle is VRFConsumerBaseV2Plus {
         return (upkeepNeeded, "");
     }
 
+    /**
+     * @dev This function should only be called by a Chainlink Upkeep
+     */
     function performUpkeep(bytes calldata /* performData */ ) external {
         // check if the duration of the raffle has ended
         (bool upkeepNeeded,) = checkUpkeep("");
@@ -150,6 +162,9 @@ contract Raffle is VRFConsumerBaseV2Plus {
         emit RequestedRaffleWinner(requestId); // This is redundant, but we are using it for testing purposes
     }
 
+    /**
+     * @dev This function can only be called by the Chainlink vrf coordinator
+     */
     function fulfillRandomWords(uint256, /* requestId */ uint256[] calldata randomWords) internal override {
         // Checks
         // Effects (Internal Contract State)

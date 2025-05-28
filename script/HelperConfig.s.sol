@@ -17,6 +17,17 @@ abstract contract CodeConstants {
     uint256 public constant LOCAL_CHAIN_ID = 31337;
 }
 
+/**
+ * @dev The HelperConfig is for the purpose of setting different..
+ * @dev ..configuration parameters based on the block chain you..
+ * @dev ..are deploying the raffle contract to.
+ * @dev Configurations have already been made for sepolia testnet..
+ * @dev ..and anvil local network.
+ * @dev To make a new configuration, add a new NetworkConfig struct..
+ * @dev ..with a function and a constructor just like is done with..
+ * @dev ..the 'getSepoliaETHConfig()'
+ * 
+ */
 contract HelperConfig is CodeConstants, Script {
     error HelperConfig__InvalidChainId();
 
