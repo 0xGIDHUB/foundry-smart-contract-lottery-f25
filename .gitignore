@@ -12,3 +12,13 @@ docs/
 
 # Dotenv file
 .env
+
+# Text files
+*.txt
+
+# Broadcasts
+broadcast/
+
+lib/
+
+
