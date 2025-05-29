@@ -72,4 +72,4 @@ Twitter: [@0xGIDHUB](https://x.com/0xGIDHUB)
 This project is licensed under the MIT License
 
 ## Acknowledgments
-Much thanks to [Patrick Collins](https://x.com/PatrickAlphaC) and [Cyfrin Updraft](https://www.cyfrin.io) for providing the learning resources for this project.
+Much thanks to [Patrick Collins](https://x.com/PatrickAlphaC) and [Cyfrin Updraft](https://www.cyfrin.io/updraft) for providing the learning resources for this project.
