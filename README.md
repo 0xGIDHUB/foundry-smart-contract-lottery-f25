@@ -64,7 +64,7 @@ You can checkout a deployed raffle smart contract on [etherscan](https://sepolia
 ## Author
 
 Gideon Ov  
-Twitter: [@0xGIDHUB](https://x.com/oxGIDHUB)
+Twitter: [@0xGIDHUB](https://x.com/0xGIDHUB)
 
 
 ## License
