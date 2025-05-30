@@ -3,7 +3,7 @@
 pragma solidity 0.8.19;
 
 
-import {Script, console} from "forge-std/Script.sol";
+import {Script, console2} from "forge-std/Script.sol";
 import {HelperConfig, CodeConstants} from "script/HelperConfig.s.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 import {LinkToken} from "test/mocks/LinkToken.sol";
@@ -20,13 +20,13 @@ contract CreateSubscription is Script {
     }
 
     function createSubscription(address vrfCoordinator, address account) public returns (uint256, address) {
-        console.log("Creating subscription on chain Id: ", block.chainid);
+        console2.log("Creating subscription on chain Id: ", block.chainid);
         vm.startBroadcast(account);
         uint256 subId = VRFCoordinatorV2_5Mock(vrfCoordinator).createSubscription();
         vm.stopBroadcast();
 
-        console.log("Your subscription Id is: ", subId);
-        console.log("Please update the subscription Id in your HelperConfig.s.sol");
+        console2.log("Your subscription Id is: ", subId);
+        console2.log("Please update the subscription Id in your HelperConfig.s.sol");
 
         return (subId, vrfCoordinator);
     }
@@ -50,9 +50,9 @@ contract FundSubscription is Script, CodeConstants {
     }
 
     function fundSubscription(address vrfCoordinator, uint256 subscriptionId, address linkToken, address account) public {
-        console.log("Funding subscription:", subscriptionId);
-        console.log("Using VRF Coordinator:", vrfCoordinator);
-        console.log("On chain Id:", block.chainid);
+        console2.log("Funding subscription:", subscriptionId);
+        console2.log("Using VRF Coordinator:", vrfCoordinator);
+        console2.log("On chain Id:", block.chainid);
 
         if (block.chainid == LOCAL_CHAIN_ID) {
             vm.startBroadcast();
@@ -79,9 +79,9 @@ contract AddConsumer is Script {
     }
 
     function addConsumer(address contractToAddToVrf, address vrfCoordinator, uint256 subId, address account) public {
-        console.log("Adding consumer contract: ", contractToAddToVrf);
-        console.log("To VRF Coordinator: ", vrfCoordinator);
-        console.log("On ChainId: ", block.chainid);
+        console2.log("Adding consumer contract: ", contractToAddToVrf);
+        console2.log("To VRF Coordinator: ", vrfCoordinator);
+        console2.log("On ChainId: ", block.chainid);
 
         vm.startBroadcast(account);
         VRFCoordinatorV2_5Mock(vrfCoordinator).addConsumer(subId, contractToAddToVrf);
