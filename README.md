@@ -43,8 +43,13 @@ sudo apt install make
 make install
 ```
 
-### Deploying
-- Setup a .env file containing your sepolia rpc url and etherscan api key before deployment, run:
+### Deploying On Sepolia
+- Setup a .env file containing your sepolia rpc url and etherscan api key:
+```
+SEPOLIA_RPC_URL=pasteyoursepoliarpcurlhere
+ETHERSCAN_API_KEY=pasteyouretherscanapikeyhere
+```
+Run the command:
 ```
 source .env
 ```
@@ -52,13 +57,38 @@ source .env
 ```
 cast wallet import -i
 ```
-(You will be prompted to input your private key)
+(You will be prompted to input your private key from your web3 wallet e.g metamask)
 - To deploy the raffle smart contract to sepolia testnet run:
 ```
-make deploy
+make deploy-sepolia
 ```
 
 You can checkout a deployed raffle smart contract on [etherscan](https://sepolia.etherscan.io/address/0xDE337A784Bdc0857eE7cF61e8145E96728081c44#code)
+
+
+### Deploying On Local Anvil
+- Setup a .env file containing the anvil wallet private key:
+```
+DEFAULT_ANVIL_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+Run the command:
+```
+source .env
+```
+- To deploy the raffle smart contract to local Anvil blockchain run:
+```
+make deploy-anvil
+```
+> **Note**  
+> I had to resolve an arithmetic overflow/underflow error when deploying to anvil so if you get a similar error, locate the createSubscription function in the SubscriptionAPI.sol contract inherited by the VRFCoordinatorV2_5.Mock.sol and change the following code block..:
+>
+> ```subId = uint256(keccak256(abi.encodePacked(msg.sender, blockhash(block.number-1), address(this), currentSubNonce)));```
+>
+>..to this:
+>
+> ```subId = uint256(keccak256(abi.encodePacked(msg.sender, blockhash(block.number), address(this), currentSubNonce)));```
+
+
 
 
 ## Author

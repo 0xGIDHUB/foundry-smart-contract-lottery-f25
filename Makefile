@@ -11,3 +11,6 @@ install:
 
 deploy-sepolia:
 	@forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(SEPOLIA_RPC_URL) --account default --broadcast --verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvvv
+
+deploy-anvil:
+	@forge script script/DeployRaffle.s.sol:DeployRaffle --private-key $(DEFAULT_ANVIL_KEY) --fork-url http://localhost:8545 --broadcast
