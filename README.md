@@ -28,7 +28,7 @@ Raffle Onchain is a project built with solidity and foundry. It enables users to
 #### Clone the repo
 - Run the following commands
 ```
-git clone https://github.com/0xGIDHUB/foundry-smart-contract-lottery-f25
+git clone https://github.com/0xGIDHUB/foundry-smart-contract-lottery-f25 --no-commit
 cd foundry-smart-contract-lottery-f25
 ```
 #### Install make
@@ -152,6 +152,80 @@ source .env
 ```
 make deploy-anvil
 ```
+- You should get a similar output to this:
+```
+[⠰] Compiling...
+No files changed, compilation skipped
+Script ran successfully.
+
+== Logs ==
+  Creating subscription on chain Id:  31337
+  Your subscription Id is:  25448741962226539893443353960832642176869692365643085071536008624333042404249
+  Please update the subscription Id in your HelperConfig.s.sol
+  Funding subscription: 25448741962226539893443353960832642176869692365643085071536008624333042404249
+  Using VRF Coordinator: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+  On chain Id: 31337
+  Adding consumer contract:  0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+  To VRF Coordinator:  0x5FbDB2315678afecb367f032d93F642f64180aa3
+  On ChainId:  31337
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 31337
+
+Estimated gas price: 2.000000001 gwei
+
+Estimated total gas used for script: 6995965
+
+Estimated amount required: 0.013991930006995965 ETH
+
+==========================
+
+##### anvil-hardhat
+✅  [Success] Hash: 0x0e192475ae533820bb5df8a52c461de2f4205e99643c3e2ccbec55c911ded035
+Contract Address: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+Block: 1
+Paid: 0.003144815003144815 ETH (3144815 gas * 1.000000001 gwei)
+
+
+##### anvil-hardhat
+✅  [Success] Hash: 0xed844ef3ce814ef3bf538d2097b790269e7ab486d44b81ee40bfe250f1fb7eb2
+Contract Address: 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+Block: 3
+Paid: 0.000781692483285906 ETH (980691 gas * 0.797083366 gwei)
+
+
+##### anvil-hardhat
+✅  [Success] Hash: 0xd3802214b3baafe127de153e44dae3819b40312bca3fa3ebb0eff381eb8f8e2f
+Block: 2
+Paid: 0.000129722409404799 ETH (143943 gas * 0.901206793 gwei)
+
+
+##### anvil-hardhat
+✅  [Success] Hash: 0xedb30d8e2370a30e40a6409fb88f1d103f8a3f849b861b48fbdcc4b1ec613a0c
+Contract Address: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+Block: 2
+Paid: 0.000829491460033439 ETH (920423 gas * 0.901206793 gwei)
+##### anvil-hardhat
+✅  [Success] Hash: 0x62b9738f7588b27c960a45c5a47968b097d870c1dc7a815e1a185ebbf179b80c
+Block: 3
+Paid: 0.000075883930609932 ETH (95202 gas * 0.797083366 gwei)
+
+
+##### anvil-hardhat
+✅  [Success] Hash: 0x6037c73c1cab08e1b324e5492611ebc265ce5578ff8732b43fc75872640e17b2
+Block: 2
+Paid: 0.000064076704189093 ETH (71101 gas * 0.901206793 gwei)
+
+✅ Sequence #1 on anvil-hardhat | Total Paid: 0.005025681990667984 ETH (5356175 gas * avg 0.882964518 gwei)
+                                                                                                                                              
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+```
 > **Note**  
 > I had to resolve an arithmetic overflow/underflow error when deploying to anvil so if you get a similar error, locate the createSubscription function in the SubscriptionAPI.sol contract inherited by the VRFCoordinatorV2_5.Mock.sol and change the following code block..:
 >
@@ -161,6 +235,11 @@ make deploy-anvil
 >
 > ```subId = uint256(keccak256(abi.encodePacked(msg.sender, blockhash(block.number), address(this), currentSubNonce)));```
 
+### Interacting With a Deployed Contract
+- If you've deployed a raffle contract on anvil and say for example you want to call the enterRaffle function of the contract, you would do run a command like this:
+```
+cast send 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 "enterRaffle()" --value 1ether --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --rpc-url http://127.0.0.1:8545
+```
 
 
 
