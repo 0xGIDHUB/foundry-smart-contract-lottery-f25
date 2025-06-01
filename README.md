@@ -28,7 +28,7 @@ Raffle Onchain is a project built with solidity and foundry. It enables users to
 #### Clone the repo
 - Run the following commands
 ```
-git clone https://github.com/0xGIDHUB/foundry-smart-contract-lottery-f25 --no-commit
+git clone https://github.com/0xGIDHUB/foundry-smart-contract-lottery-f25
 cd foundry-smart-contract-lottery-f25
 ```
 #### Install make
